@@ -1,0 +1,75 @@
+<div class="accordion" id="accordionExample2">
+	<table class="table" style="background-color: #f5f5f5;box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);">
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col">Заказ #</th>
+			<th scope="col">Дата</th>
+			<th scope="col">Код</th>
+			<th scope="col">Товаров в корзине</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody class="data-table">
+		{% for key_o,val_o in val.orders %}
+		<tr>
+			<th scope="row">{{val_o.id}}</th>
+			<td>{{val_o.date}}</td>
+			<td>{{val_o.code}}</td>
+			<td>{{val_o.basket|length}}</td>
+			<td>
+				<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{val_o.id}}_order" aria-controls="collapse{{val_o.id}}_order">
+					Развернуть список
+				</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5">
+				<div id="collapse{{val_o.id}}_order" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample2">
+					<table class="table" style="background-color: #f5f5f5;box-shadow:inset 0 0 50px rgba(0, 0, 0, 0.5);">
+						<thead class="thead-dark">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Фото товара</th>
+							<th scope="col">Наименование</th>
+							<th scope="col">Категория</th>
+							<th scope="col">Цена за ед.(руб.)</th>
+							<th scope="col">Количество (шт.)</th>
+							<th scope="col">Стоимость (руб.)</th>
+						</tr>
+						</thead>
+						<tbody>
+						{% set summ = 0 %}
+						{% for key_b,val_b in val_o.basket %}
+						<tr>
+							<th scope="row">{{key_b+1}}</th>
+							<td><a href="index.php?path=goods/detail/{{ val_b.id_good }}"><img src="{{val_b.picture}}" width="80"> </a></td>
+							<td>{{val_b.name}}</td>
+							<td>{{val_b.category_name}}</td>
+							<td>{{val_b.price}}</td>
+							<td>
+								<!--				<a class="btn-floating" id="arrow_minus" data-val="{{val.price}}" data-id="{{val.id_good}}" style="cursor: pointer"><i class="fas fa-arrow-left fa-xs"></i></a>-->
+								{{val_b.count}}
+								<!--				<a class="btn-floating" id="arrow_plus" data-val="{{val.price}}" data-content="{{val.id_good}}" style="cursor: pointer"><i class="fas fa-arrow-right fa-xs"></i></a>-->
+							</td>
+							<td>{{val_b.count*val_b.price}}</td>
+							{% set summ = summ+(val_b.count*val_b.price) %}
+						</tr>
+						{% endfor %}
+						<tr>
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><b>ИТОГО:</b></td>
+							<td>{{summ}}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>

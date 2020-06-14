@@ -1,0 +1,22 @@
+<h3>Вы недавно смотрели:</h3>
+<div class="row" style="display: inline">
+	<div class="col-sm-1">
+	</div>
+			{% for key, good in views_goods  %}
+			<div class="col-sm-2 text-center views_goods">
+				<a href="index.php?path=goods/detail/{{ good.id_good }}"><img src="{{good.picture}}" width="100"  alt="..."></a>
+					<h5>{{good.name}}</h5>
+					<h6>{{good.price}}<b>&#8381;</b></h6>
+					<h4>
+						{% if (session.USER.group_id==1) %}
+						<button  class="btn btn-info btn-sm" id="goods_editor" data-val="{{good.id_good}}">Редактировать</button>
+						{% else %}
+						<button  class="btn btn-info btn-sm" id="buyme" data-val="{{good.id_good}}">В корзину</button>
+						{% endif %}
+					</h4>
+			</div>
+				{% endfor %}
+	<div class="col-sm-1">
+	</div>
+</div>
+<hr>

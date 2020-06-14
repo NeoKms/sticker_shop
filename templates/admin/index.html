@@ -1,0 +1,25 @@
+{% include 'header.html' %}
+<div class="container fluid hello-block">
+	<div class="row">
+<h1> Сводная информация по магазину</h1>
+	</div>
+	<div class="row">
+		<h4> Всего пользователей: {{content_data.users}} </h4>
+	</div>
+	<div class="row">
+		<h4> Всего заказов закрыто товаров: {{content_data.orders}} </h4>
+	</div>
+	<div class="row">
+		<h4> Всего товаров продано: {{content_data.goods_sold.all}} </h4>
+	</div>
+	<div class="row">
+		<div id="container" style="width:100%; height:400px;"></div>
+	</div>
+</div>
+{% block javascripts %}
+<script src="js/admin.js"></script>
+<script src = " https://code.highcharts.com/highcharts.js " > </script>
+{% endblock %}
+{% include 'footer.html' %}
+
+

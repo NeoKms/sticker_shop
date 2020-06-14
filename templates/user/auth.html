@@ -1,0 +1,44 @@
+{% if content_data.exit %}
+<script type="text/javascript">
+	location.replace("index.php?path=user/auth");
+</script>
+{% endif %}
+{% if session.uid>0 %}
+<script type="text/javascript">
+	location.replace("index.php");
+</script>
+{% endif %}
+{% if content_data.auth==1 %}
+<script type="text/javascript">
+	location.replace("index.php");
+</script>
+{% endif %}
+{% include 'header.html' %}
+<body>
+<div class="text-center">
+	<form name="test" method="post">
+	<div class="form-group">
+		<img src="img/hello_keany.png" class="img-fluid logo-img">
+		<h2> Please Sign in</h2>
+		<input type="text" class="form-control login" id="login" name="login" placeholder="Login" value="{{content_data.login}}" required autofocus>
+		<input class="form-control pass" type="password" id="password" name="password" placeholder="Password" value="{{content_data.password}}" required>
+		<div class="container text-center">
+			<a href="index.php?c=user&act=register" style="margin-right: 100px" > Sign up</a>
+			<a href="#" style="margin-left: 100px"> Forgot password? </a><br/><br/>
+		</div>
+		<input type="submit" name="done" value="Sign in" class="btn btn-primary mb-2">
+		<div class="error-text">
+			{{content_data.error}}
+		</div>
+		<h4>Sign in in with your social account</h4>
+		<div class="container">
+			<a href="#" class="btn btn-info mb-2 icon-auth disabled"><i class="fab fa-facebook-square"></i> </a>
+			<a href="#" class="btn btn-info mb-2 icon-auth disabled"><i class="fab fa-google"></i> </a>
+			<a href="#" class="btn btn-info mb-2 icon-auth" id="vk_oauth"><i class="fab fa-vk"></i></a>
+			<a href="#" class="btn btn-info mb-2 icon-auth disabled"><i class="fab fa-twitter"></i> </a>
+		</div>
+	</div>
+	</form>
+</div>
+{% include 'footer.html' %}
+

@@ -1,0 +1,115 @@
+{% include 'header.html' %}
+<div class="container fluid hello-block">
+	<h2> Закрытые заказы </h2>
+	{% if content_data.orders %}
+	<div class="row">
+		<table class="table table-hover">
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Имя</th>
+			<th scope="col">Телефон</th>
+			<th scope="col">Емаил</th>
+			<th scope="col"></th>
+		</tr>
+		</thead>
+<!--			<div>{{val.orders|json_encode}}</div>-->
+						<tbody class="data-table">
+						{% for key,val in content_data.orders %}
+						<tr>
+							<th scope="row">{{val.user.id}}</th>
+							<td>{{val.user.name}}</td>
+							<td>{{val.user.phone}}</td>
+							<td>{{val.user.email}}</td>
+							<td>
+								<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#user_{{val.user.id}}" aria-expanded="false" aria-controls="user_{{val.user.id}}">
+									Список
+								</button>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="5">
+								<div class="collapse" id="user_{{val.user.id}}">
+								<table class="table" style="background-color: #f5f5f5;box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);">
+									<thead class="thead-dark">
+									<tr>
+										<th scope="col">Заказ #</th>
+										<th scope="col">Дата</th>
+										<th scope="col">Код</th>
+										<th scope="col">Товаров в корзине</th>
+									</tr>
+									</thead>
+									<tbody class="data-table">
+									{% for key_o,val_o in val.orders %}
+									<tr>
+										<th scope="row">{{val_o.id}}</th>
+										<td>{{val_o.date}}</td>
+										<td>{{val_o.code}}</td>
+										<td>{{val_o.basket|length}}</td>
+									</tr>
+									<tr>
+										<td colspan="5">
+<!--											<div class="collapse" id="#order_{{val_o.id}}">-->
+											<div>
+												<table class="table" style="background-color: #f5f5f5;box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);">
+													<thead class="thead-dark">
+													<tr>
+														<th scope="col">#</th>
+														<th scope="col">Фото товара</th>
+														<th scope="col">Наименование</th>
+														<th scope="col">Категория</th>
+														<th scope="col">Цена за ед.(руб.)</th>
+														<th scope="col">Количество (шт.)</th>
+														<th scope="col">Стоимость (руб.)</th>
+													</tr>
+													</thead>
+													<tbody>
+													{% set summ = 0 %}
+													{% for key_b,val_b in val_o.basket %}
+													<tr>
+														<th scope="row">{{key_b+1}}</th>
+														<td><a href="index.php?path=goods/detail/{{ val_b.id_good }}"><img src="{{val_b.picture}}" width="80"> </a></td>
+														<td>{{val_b.name}}</td>
+														<td>{{val_b.category_name}}</td>
+														<td>{{val_b.price}}</td>
+														<td>
+															<!--				<a class="btn-floating" id="arrow_minus" data-val="{{val.price}}" data-id="{{val.id_good}}" style="cursor: pointer"><i class="fas fa-arrow-left fa-xs"></i></a>-->
+															{{val_b.count}}
+															<!--				<a class="btn-floating" id="arrow_plus" data-val="{{val.price}}" data-content="{{val.id_good}}" style="cursor: pointer"><i class="fas fa-arrow-right fa-xs"></i></a>-->
+														</td>
+														<td>{{val_b.count*val_b.price}}</td>
+														{% set summ = summ+(val_b.count*val_b.price) %}
+													</tr>
+													{% endfor %}
+													<tr>
+														<th scope="row"></th>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td><b>ИТОГО:</b></td>
+														<td>{{summ}}</td>
+													</tr>
+													</tbody>
+												</table>
+											</div>
+										</td>
+									</tr>
+									{% endfor %}
+									</tbody>
+								</table>
+								</div>
+							</td>
+						</tr>
+						{% endfor %}
+						</tbody>
+		</table>
+		{% endif %}
+	</div>
+</div>
+{% block javascripts %}
+<script src="../templates/admin/main.js"></script>
+{% endblock %}
+{% include 'footer.html' %}
+
+

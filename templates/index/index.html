@@ -1,0 +1,20 @@
+{% include 'header.html' %}
+	<div class="container fluid hello-block">
+		<div class="row">
+			<div class="col-sm-6">
+				<img src="{{content_data.main_photo}}" width="300">
+			</div>
+			<div class="col-sm-6 text">
+				<h2>
+					{{content_data.main_text | nl2br}}
+				</h2>
+			</div>
+		</div>
+	</div>
+{% if content_data.carousel %}
+{% include 'goods/includes/goods_carousel.html' %}
+{% endif %}
+{% if(views_goods) %}
+{% include '/goods/includes/pages_view.html' %}
+{% endif %}
+{% include 'footer.html' %}

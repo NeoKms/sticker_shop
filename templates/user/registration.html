@@ -1,0 +1,28 @@
+{% if content_data.res=='success' %}
+<script type="text/javascript">
+	location.replace("index.php");
+</script>
+{% endif %}
+{% include 'header.html' %}
+<body>
+<div class="text-center">
+	<form name="test" action="{{self_url}}" method="post">
+	<div class="form-group">
+		<img src="img/love_keany.png" class="img-fluid logo-img" width="200">
+		<h2>Sign up</h2>
+		<input class="form-control login" type="text" id="name" name="name" placeholder="Ваше имя" value="{{content_data.name}}" required autofocus>
+		<input class="form-control login" type="text" id="login" name="login" placeholder="Login" value="{{content_data.login}}" required autofocus>
+		<input class="form-control pass" type="password" id="password" name="password" placeholder="Password" value="{{content_data.password}}" required>
+		<input class="form-control email" type="email" id="email" name="email" placeholder="Email" value="{{content_data.email}}" required>
+		<input class="form-control tel" type="tel" id="phone" name="phone" placeholder="Mobile phone" value="{{content_data.phone}}" required>
+		<input type="checkbox" id="personal" placeholder="Mobile phone" name="personal" required >
+		<label for="personal">Согласен на обработку <a href="http://www.consultant.ru/document/cons_doc_LAW_61801/">персональных данных</a></label></br>
+		<input type="submit" name="done" value="Sign up" class="btn btn-primary mb-2 submit-btn">
+		<div class="error-text">
+			{{content_data.error}}
+		</div>
+	</div>
+	</form>
+</div>
+{% include 'footer.html' %}
+

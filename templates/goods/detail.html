@@ -1,0 +1,22 @@
+{% include 'header.html' %}
+<div class="container fluid hello-block">
+	<div class="row">
+		<div class="col-sm-6">
+				<h2><b>Товар: </b>{{ content_data.good.name }}</h2>
+				<h3><b>Категория: </b>{{ content_data.good.category_name }}</h3>
+			<img class='goodImg-detail' src="{{ content_data.good.picture }}" width="400">
+		</div>
+		<div class="col-sm-6 text">
+			<br><br><br>
+			<div>{{ content_data.good.description }}</div>
+			<div><b>Стоимость: </b>{{ content_data.good.price }}&#8381;</div>
+			{% if content_data.good.special %}
+			<div><b>Специальное предложение!</b></div>
+			{% else %}
+			<div>&#160;</div>
+			{% endif %}
+			<button  class="btn btn-info btn-sm" id="buyme" data-val="{{content_data.good.id_good}}" style="margin-top: 5px">Добавить в корзину</button>
+		</div>
+	</div>
+</div>
+{% include 'footer.html' %}

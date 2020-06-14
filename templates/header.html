@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="shortcut icon" href="favicon.png" type="image/png">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.php"><img src="img/saints.png" alt="logo" width="100"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" id="p-indexcontroller-index">
+                    <a class="nav-link" href="index.php">На главную</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Каталог
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if categories %}
+                        {% for key,val in categories %}
+                        <a class="dropdown-item" href="index.php?path=categories/{{val.id}}">{{val.name}}</a>
+                        {% endfor %}
+                        <div class="dropdown-divider"></div>
+                        {% endif %}
+                        <a class="dropdown-item" href="index.php?path=news/sales">Акции</a>
+                    </div>
+                </li>
+                {% if(session.uid<0) %}
+                <li class="nav-item" id="p-usercontroller-auth">
+                    <a class="nav-link" href="index.php?path=user/auth">Авторизация</a>
+                </li>
+                <li class="nav-item" id="p-usercontroller-registration">
+                    <a class="nav-link" href="index.php?path=user/registration">Регистрация</a>
+                </li>
+                {% endif %}
+                {% if(session.uid>0) %}
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?path=user/cabinet">Личный кабинет</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?path=user/auth/1">Выход</a>
+                </li>
+                {% endif %}
+                {% if (session.USER.group_id!=1) %}
+                <li class="nav-item">
+                    <a class="nav-link" id="p-basketcontroller-index" href="index.php?path=basket/{{session.basket.id}}"><i class="fas fa-shopping-basket fa-sm"></i> Корзина (<span id="count_basket">{{session.basket.count}}</span>)</a>
+                </li>
+                {% endif %}
+                {% if (session.USER.group_id==1) %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle admin" href="#" id="navbarDropdownAdmin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Админка
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+                        <a class="dropdown-item" href="index.php?path=admin">Сводная информация</a>
+                        <a class="dropdown-item" href="index.php?path=admin/orders">Управление заказами</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="index.php?path=admin/goodsEditor">Редактор товаров</a>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container text-center main-body">

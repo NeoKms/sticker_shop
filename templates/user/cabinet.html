@@ -1,0 +1,38 @@
+{% include 'header.html' %}
+<div class="container fluid hello-block">
+
+</div>
+
+<div class="container fluid hello-block">
+<h3>Личный кабинет</h3>
+	<br><br>
+</div>
+<div class="container fluid ">
+	<div class="row">
+		<h4>
+			Информация о пользователе:
+		</h4>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<img src="img/pray_keany.png" width="300">
+		</div>
+		<div class="col-sm-6 text">
+			<span><b>Имя:</b></span> {{content_data.user.name}}<br>
+			<span><b>Телефон:</b></span> {{content_data.user.phone}}<br>
+			<span><b>Емаил:</b></span> {{content_data.user.email}}<br>
+		</div>
+	</div>
+	{% if(content_data.orders) %}
+	<div class="row">
+		<h4>Перечень заказов:</h4>
+	</div>
+	{% set id = session.uid %}
+	{% set val = content_data.orders[session.uid] %}
+	{% include 'orders/includes/orders_list.html' %}
+	{% endif %}
+</div>
+
+{% block javascripts %}
+{% endblock %}
+{% include 'footer.html' %}

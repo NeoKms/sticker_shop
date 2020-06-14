@@ -1,0 +1,14 @@
+AddDefaultCharset utf-8
+DirectoryIndex index.php index.html
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} -f [NC,OR]
+RewriteCond %{REQUEST_FILENAME} -d [NC]
+RewriteRule .* - [L]
+
+RewriteRule ^(.*)/$ ?path=$1 [QSA,L]
+
+
+
+

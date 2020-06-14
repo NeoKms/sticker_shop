@@ -1,0 +1,7 @@
+{% include 'header.html' %}
+<h2> Каталог товаров - {{content_data.titel}}</h2>
+{% if content_data.goods %}
+{% include 'goods/includes/goods_list.html' %}
+{% endif %}
+{% include 'footer.html' %}
+

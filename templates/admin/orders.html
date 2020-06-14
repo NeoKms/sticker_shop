@@ -1,0 +1,48 @@
+{% include 'header.html' %}
+<div class="container fluid hello-block">
+	<h2> Закрытые заказы </h2>
+	{% if content_data.orders %}
+	<div class="accordion" id="accordionExample">
+		<table class="table table-hover">
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Имя</th>
+			<th scope="col">Телефон</th>
+			<th scope="col">Емаил</th>
+			<th scope="col"></th>
+		</tr>
+		</thead>
+<!--			<div>{{val.orders|json_encode}}</div>-->
+						<tbody class="data-table">
+						{% for key,val in content_data.orders %}
+						<tr>
+							<th scope="row">{{val.user.id}}</th>
+							<td>{{val.user.name}}</td>
+							<td>{{val.user.phone}}</td>
+							<td>{{val.user.email}}</td>
+							<td>
+								<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{val.user.id}}_usr" aria-controls="collapse{{val.user.id}}_usr">
+									Развернуть список
+								</button>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="5">
+								<div id="collapse{{val.user.id}}_usr" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+								{% include 'orders/includes/orders_list.html' %}
+								</div>
+							</td>
+						</tr>
+						{% endfor %}
+						</tbody>
+		</table>
+		{% endif %}
+	</div>
+</div>
+{% block javascripts %}
+<!--<script src="../templates/admin/main.js"></script>-->
+{% endblock %}
+{% include 'footer.html' %}
+
+

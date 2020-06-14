@@ -1,0 +1,93 @@
+{% include 'header.html' %}
+{% if content_data.registration==1 %}
+<script type="text/javascript">
+	alert('Заказ оформлен');
+	location.replace("index.php");
+</script>
+{% endif %}
+<div class="container fluid hello-block">
+	<div class="row">
+		<h2><b>Корзина: </b> {{session.basket.count}} товаров.</h2>
+	</div>
+	<br>
+	{% if content_data.goods %}
+	<table class="table">
+		<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Фото товара</th>
+			<th scope="col">Наименование</th>
+			<th scope="col">Категория</th>
+			<th scope="col">Цена за ед.(руб.)</th>
+			<th scope="col">Количество (шт.)</th>
+			<th scope="col">Стоимость (руб.)</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% set summ = 0 %}
+		{% for key,val in content_data.goods %}
+		<tr>
+			<th scope="row">{{key+1}}</th>
+			<td><a href="index.php?path=goods/detail/{{ val.id_good }}"><img src="{{val.picture}}" width="80"> </a></td>
+			<td>{{val.name}}</td>
+			<td>{{val.category_name}}</td>
+			<td>{{val.price}}</td>
+			<td>
+<!--				<a class="btn-floating" id="arrow_minus" data-val="{{val.price}}" data-id="{{val.id_good}}" style="cursor: pointer"><i class="fas fa-arrow-left fa-xs"></i></a>-->
+				{{val.count}}
+<!--				<a class="btn-floating" id="arrow_plus" data-val="{{val.price}}" data-content="{{val.id_good}}" style="cursor: pointer"><i class="fas fa-arrow-right fa-xs"></i></a>-->
+			</td>
+			<td>{{val.count*val.price}}</td>
+			{% set summ = summ+(val.count*val.price) %}
+		</tr>
+		{% endfor %}
+		<tr>
+			<th scope="row"></th>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b>ИТОГО:</b></td>
+			<td>{{summ}}</td>
+		</tr>
+		</tbody>
+	</table>
+	{% if(session.uid>0) %}
+	<button class="btn-group-lg btn btn-danger" id="apply_order">Оформить заказ</button>
+	{% else %}
+	<form name="basket" id="basket" action="{{self_url}}" method="post">
+	<div class="form-group">
+		<h3>Для оформления заказа заполните поля</h3>
+		<input class="form-control login" type="text" id="name" name="name" placeholder="Ваше имя" value="{{content_data.name}}" required autofocus oninput="checkBtn()" onchange="checkBtn()">
+		<input class="form-control email" type="email" id="email" name="email" placeholder="Email" value="{{content_data.email}}" required oninput="checkBtn()" onchange="checkBtn()">
+		<input class="form-control tel" type="tel" id="login" name="login" placeholder="Mobile phone" value="{{content_data.login}}" required oninput="checkBtn()" onchange="checkBtn()">
+		<input type="checkbox" id="reg" name="reg" onchange="checkBtn()">
+		<label for="reg"> Хотите стать нашим пользователем?</label>
+		<input class="form-control pass" style="display: none;" type="password" id="password" name="password" placeholder="Password" value="{{content_data.password}}" oninput="checkBtn()" onchange="checkBtn()">
+		<br>
+		<input type="submit" name="done" value="Оформить заказ"  id="reg-order" class="btn btn-danger mb-2" disabled>
+		<div class="error-text">
+			{{content_data.error}}
+		</div>
+		<div>
+			Нажимая "оформить заказ" вы даете согласие на обработку <a href="http://www.consultant.ru/document/cons_doc_LAW_61801/">персональных данных</a>
+		</div>
+	</div>
+	</form>
+	{% endif %}
+	{% else %}
+	<div class="text-center">
+		<h2> Корзина пуста.<br> Добавь что-нибудь.</h2>
+		<img src="img/pray_keany.png" width="200">
+	</div>
+	{% endif %}
+</div>
+{% if(views_goods) %}
+{% include '/goods/includes/pages_view.html' %}
+{% endif %}
+{% block javascripts %}
+<script src="js/basket.js"></script>
+{% endblock %}
+{% include 'footer.html' %}
+
+
