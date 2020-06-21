@@ -39,7 +39,7 @@ class Basket extends Model
         if (!empty($res)){
             $count=(int)$res[0]['count'];
             $count++;
-            $res = $this->db->upsert($this->table,$res[0]['id'],['count'=>$count++],$this->maps[$this->table]);
+            $res = $this->db->upsert($this->table,$res[0]['id'],['count'=>$count],$this->maps[$this->table]);
             if ($res[0]){
                 return [true,'exist'];
             }
@@ -51,6 +51,29 @@ class Basket extends Model
             ],$this->maps[$this->table]);
             $_SESSION['basket']['count']++;
             if ($res[0]) return [true,'add'];
+        }
+        return [false];
+    }
+
+    public function delGood(){
+        $param = $this->request['params'];
+        if ($param['id_good']<0) return [false];
+        $sql = $this->db->selectValue(['id','count'], ['id_order' => $_SESSION['basket']['id'],'id_good'=>$param['id_good']], $this->maps[$this->table]);
+        $q = "SELECT " . $sql['select'] . " FROM " . $this->table . $sql['where'];
+        $res = $this->db->query($q);
+        if (!empty($res)){
+            $count=(int)$res[0]['count'];
+            if ($count>1) {
+                $count--;
+                $res = $this->db->upsert($this->table, $res[0]['id'], ['count' => $count], $this->maps[$this->table]);
+                if ($res[0]) {
+                    return [true, 'exist'];
+                }
+            }elseif ($count==1){
+                $this->db->query("DELETE FROM {$this->table} WHERE id={$res[0]['id']}",true);
+                $_SESSION['basket']['count']--;
+                return [true, 'del'];
+            }
         }
         return [false];
     }

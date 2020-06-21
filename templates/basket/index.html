@@ -7,10 +7,11 @@
 {% endif %}
 <div class="container fluid hello-block">
 	<div class="row">
-		<h2><b>Корзина: </b> {{session.basket.count}} товаров.</h2>
+		<h2><b>Корзина: </b> <span id="count_basket_2">{{session.basket.count}}</span> товар(ов).</h2>
 	</div>
 	<br>
 	{% if content_data.goods %}
+	<div id="basket_body">
 	<table class="table">
 		<thead>
 		<tr>
@@ -26,18 +27,18 @@
 		<tbody>
 		{% set summ = 0 %}
 		{% for key,val in content_data.goods %}
-		<tr>
+		<tr id="row_{{val.id_good}}">
 			<th scope="row">{{key+1}}</th>
 			<td><a href="index.php?path=goods/detail/{{ val.id_good }}"><img src="{{val.picture}}" width="80"> </a></td>
 			<td>{{val.name}}</td>
 			<td>{{val.category_name}}</td>
 			<td>{{val.price}}</td>
 			<td>
-<!--				<a class="btn-floating" id="arrow_minus" data-val="{{val.price}}" data-id="{{val.id_good}}" style="cursor: pointer"><i class="fas fa-arrow-left fa-xs"></i></a>-->
-				{{val.count}}
-<!--				<a class="btn-floating" id="arrow_plus" data-val="{{val.price}}" data-content="{{val.id_good}}" style="cursor: pointer"><i class="fas fa-arrow-right fa-xs"></i></a>-->
+				<a class="btn-floating" id="arrow_minus" style="cursor: pointer" onclick="changeBasket(this,{{val.id_good}},{{val.price}})"><i class="far fa-minus-square"></i></a>
+				<span id="count_{{val.id_good}}">{{val.count}}</span>
+				<a class="btn-floating" id="arrow_plus" style="cursor: pointer"  onclick="changeBasket(this,{{val.id_good}},{{val.price}})"><i class="far fa-plus-square"></i></a>
 			</td>
-			<td>{{val.count*val.price}}</td>
+			<td id="summ_{{ val.id_good }}">{{val.count*val.price}}</td>
 			{% set summ = summ+(val.count*val.price) %}
 		</tr>
 		{% endfor %}
@@ -48,7 +49,7 @@
 			<td></td>
 			<td></td>
 			<td><b>ИТОГО:</b></td>
-			<td>{{summ}}</td>
+			<td id="summ_fun">{{summ}}</td>
 		</tr>
 		</tbody>
 	</table>
@@ -74,13 +75,13 @@
 		</div>
 	</div>
 	</form>
+	</div>
 	{% endif %}
-	{% else %}
-	<div class="text-center">
+	{% endif %}
+	<div class="text-center" id="empty_basket" {% if  session.basket.count > 0  %} style="display: none;" {% endif %}>
 		<h2> Корзина пуста.<br> Добавь что-нибудь.</h2>
 		<img src="img/pray_keany.png" width="200">
 	</div>
-	{% endif %}
 </div>
 {% if(views_goods) %}
 {% include '/goods/includes/pages_view.html' %}

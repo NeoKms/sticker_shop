@@ -34,9 +34,6 @@ class AdminController extends Controller
         $result['orders']=$orders->getList();
         $result['users']=$users->getCount();
         $result['goods_sold']=$orders->getSoldGoods();
-//        echo '<pre>';
-//        var_dump($result);
-//        echo '</pre>';
         return $result;
     }
 

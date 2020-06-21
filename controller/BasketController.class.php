@@ -35,4 +35,9 @@ class BasketController extends Controller
         $result=array_merge($result,['goods'=>$goods]);
         return $result;
     }
+
+    public function delAJAX ($data)
+    {
+        return (new Basket($data))->delGood();
+    }
 }

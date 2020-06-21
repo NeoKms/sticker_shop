@@ -186,6 +186,7 @@ class Orders extends Model
                 }
             }
         }
+        // ToDo сделать добавление заказов, которые были сделаны анонимными пользователями
         return $arrOrders;
     }
     public function getList(){

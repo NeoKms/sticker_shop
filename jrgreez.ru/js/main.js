@@ -51,7 +51,7 @@ $(document).ready(function(){
 $( "#basket" ).submit(function( event ){
     event.preventDefault();
     var data= $( "#basket" ).serializeArray();
-    // console.log(data);
+    console.log(data);
     $.ajax({
         type: "POST",
         url: "index.php?path=orders/applyAJAX/&asAjax=1",

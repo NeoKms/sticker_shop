@@ -5,7 +5,6 @@ class App
     public static $twig;
     public static function Init()
     {
-        Logger::write(' ip: '.$_SERVER['REMOTE_ADDR'].' agent: '.$_SERVER['HTTP_USER_AGENT']);
         date_default_timezone_set('Europe/Moscow');
         DBase::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
         Users::init();
@@ -23,14 +22,14 @@ class App
         $url = explode("/", $url);
         $_GET['id']=false;
         if (!empty($url[0])) {
-            $_GET['page'] = $url[0];//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $_GET['page'] = $url[0];//Часть имени класса контроллера
             if (isset($url[1])) {
                 if (is_numeric($url[1])) {
                     $_GET['id'] = $url[1];
                 } else {
-                    $_GET['action'] = $url[1];//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                    $_GET['action'] = $url[1];//часть имени метода
                 }
-                if (isset($url[2])) {//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                if (isset($url[2])) {//формальный параметр для метода контроллера
                     $_GET['id'] = $url[2];
                 }
             }
@@ -41,15 +40,15 @@ class App
             $errors = [];
             $controllerName = ucfirst($_GET['page']) . 'Controller';
             $methodName = isset($_GET['action']) ? $_GET['action'] : 'index';
-            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
-            //пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 404
+            //проверка на доступность контроллера и существования метода для вьюхи
+            //если не существует, то берет индексовый с ошибкой 404
             if (!class_exists($controllerName) || !method_exists($controllerName, $methodName)) {
                 $controllerName = 'IndexController';
                 $methodName = 'Error404';
                 $errors[] = '1';
             }
             $controller = new $controllerName();
-            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            //преобразуем данные в запрос для метода. + прогоним аякс правильно
             if (isset($_POST['data'])) {
                 $tmp=[];
                 foreach ($_POST['data'] as $oneParam) {
@@ -68,22 +67,22 @@ class App
                 'title' => $controller->title,
                 'views_goods'=>(new Pages([]))->getGoods(),
             ];
-            //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
+            //ставим категории в меню
             $categories=(new Categories($req))->getCategories();
             if ($categories!==false) $data['categories']=$categories;
             //
             $view = $controller->view . '/' . $methodName . '.html';
             self::setPageSession();
-            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+            //проверка на существования вьюхи
             if (!file_exists('../../templates/' . $view) || !is_file('../../templates/' . $view)) {
                 $view = 'index/Error404.html';
                 $errors[] = '2';
             }
-            //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-            //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 1 - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. 2 - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
+            //если были ошибки - вывести
+            //коды ошибок 1 - нет метода или класса. 2 - нет вьюхи.
             if (!empty($errors))
                 $controller->ConsoleAlert($errors);
-            $_SESSION['cur_page']='p-'.strtolower($controllerName.'-'.$methodName);
+            self::$twig->addGlobal('cur_page', 'p-'.strtolower($controllerName.'-'.$methodName));
             $template = self::$twig->loadTemplate($view);
             echo $template->render($data);
         }

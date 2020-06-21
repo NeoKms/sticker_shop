@@ -1,0 +1,15 @@
+<div class='goodsWrap'>
+	<div class="wrapGoodImg">
+		<a href="index.php?path=goods/detail/{{ good.id_good }}"><img class='goodImg' src="{{ good.picture }}" width="150"></a>
+	</div>
+	<div class="wrapGoodInfo">
+		<div><b>Название: </b>{{ good.name }}</div>
+		<div ><b>Стоимость: </b>{{ good.price }}&#8381;</div>
+		{% if good.special %}
+		<div><b>Специальное предложение!</b></div>
+		{% else %}
+		<div>&#160;</div>
+		{% endif %}
+		<button  class="btn btn-info btn-sm" id="buyme" data-val="{{good.id_good}}" style="margin-top: 5px">Добавить в корзину</button>
+	</div>
+</div>
