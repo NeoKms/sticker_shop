@@ -1,8 +1,8 @@
 <?php
-$config['db_user'] = 'u301987_admin_cat';
-$config['db_password'] = 'root1234';
-$config['db_base'] = 'u301987_catalog';
-$config['db_host'] = 'localhost';
+$config['db_user'] = '';
+$config['db_password'] = '';
+$config['db_base'] = '';
+$config['db_host'] = '';
 $config['db_charset'] = 'UTF-8';
 
 $config['path_root'] = __DIR__;
