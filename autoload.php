@@ -3,7 +3,7 @@ require_once 'lib/Twig/Autoloader.php';
 require_once 'lib/vendor/autoload.php';
 Twig_Autoloader::register();
 
-autoload("gbStandardAutoload");
+spl_autoload_register("autoload");
 
 function autoload($className)
 {
