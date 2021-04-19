@@ -1,12 +1,14 @@
 <?php
 require_once 'autoload.php';
 try{
+	throw new Exception('kek');
     App::init();
 }
 catch (PDOException $e){
     echo "DB is not available </br>";
-    var_dump($e->getTrace());
 }
 catch (Exception $e){
-    echo $e->getMessage();
+	if (isset($_REQUEST['DEBUG'])) {
+		echo $e->getMessage().PHP_EOL."<pre>".print_r($e->getTrace(),true)."</pre>";
+	}
 }
