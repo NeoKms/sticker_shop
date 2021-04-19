@@ -3,9 +3,9 @@ require_once 'lib/Twig/Autoloader.php';
 require_once 'lib/vendor/autoload.php';
 Twig_Autoloader::register();
 
-spl_autoload_register("gbStandardAutoload");
+autoload("gbStandardAutoload");
 
-function gbStandardAutoload($className)
+function autoload($className)
 {
     $dirs = [
         'controller',
