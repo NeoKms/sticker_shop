@@ -7,7 +7,7 @@ class App
     {
         Logger::write(' ip: '.$_SERVER['REMOTE_ADDR'].' agent: '.$_SERVER['HTTP_USER_AGENT']);
         date_default_timezone_set('Europe/Moscow');
-        DBase::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
+        DBase::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'),Config::get('db_host'),Config::get('db_port'));
         Users::init();
         $loader = new Twig_Loader_Filesystem(Config::get('path_templates'));
         self::$twig = new Twig_Environment($loader);
