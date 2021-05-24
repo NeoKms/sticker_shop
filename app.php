@@ -1,7 +1,6 @@
 <?php
 require_once 'autoload.php';
 try{
-	throw new Exception('kek');
     App::init();
 }
 catch (PDOException $e){
