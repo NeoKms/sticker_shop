@@ -3,6 +3,7 @@ $config['db_user'] = '';
 $config['db_password'] = '';
 $config['db_base'] = '';
 $config['db_host'] = '';
+$config['db_port'] = '';
 $config['db_charset'] = 'UTF-8';
 
 $config['path_root'] = __DIR__;
