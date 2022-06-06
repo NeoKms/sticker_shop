@@ -85,6 +85,8 @@ footer a {
 	display: inline-block;
 }
 .goodsWrap{
+	min-width: 250px;
+	max-width: 250px;
 	background-color: #f5f5f5;
 	box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
 	display: inline-block;
