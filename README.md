@@ -1,3 +1,2 @@
 # sticker_shop
-Online sticker shop (mainly with keanu)
-jrgreez.ru/shop/
+[Online sticker shop (mainly with keanu)](https://jrgreez.ru/shop/)
