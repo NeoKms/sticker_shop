@@ -114,3 +114,31 @@ footer a {
 margin: auto;
 max-width: 300px;
 }
+@media screen and (max-width: 768px){
+	#basket_body {
+		overflow: auto;
+	}
+}
+@media screen and (max-width: 488px){
+	.carousel-item img {
+		width: 268px;
+	}
+	.carousel-caption h3  {
+		font-size: 1.4rem !important;
+	}
+	.carousel-caption h4 {
+		font-size: 1rem !important;
+	}
+	.hello-block .hello-text h2 {
+		font-size: 1rem;
+	}
+	.hello-block .disclaimer {
+		font-size: 1rem;
+	}
+	.hello-block .preview-image {
+		width: 150px;
+	}
+	.accordion {
+		overflow: auto;
+	}
+}
